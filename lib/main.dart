@@ -22,9 +22,9 @@ class MainPageState extends State<MainPage> {
                 icon: Icon(Icons.refresh),
                 onPressed: () {
                   print('get data covid');
-                  _GetCovidData();
+                //  _GetCovidData();
                 }
-                //tooltip: 'เช็ดข้อมูลล่าสุด',
+                tooltip: 'เช็ดข้อมูลล่าสุด',
                 )
           ],
         ),
