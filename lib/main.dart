@@ -22,9 +22,9 @@ class MainPageState extends State<MainPage> {
                 icon: Icon(Icons.refresh),
                 onPressed: () {
                   print('get data covid');
-                //  _GetCovidData();
+                  _GetCovidData();
                 }
-                tooltip: 'เช็ดข้อมูลล่าสุด',
+                //tooltip: 'เช็ดข้อมูลล่าสุด',
                 )
           ],
         ),
@@ -45,12 +45,12 @@ class MainPageState extends State<MainPage> {
 
 //https://covid19.ddc.moph.go.th/api/Cases/today-cases-all
 
-Future<String> _GetCovidData() async {
+Future _GetCovidData() async {
   var Url = Uri.https('covid19.ddc.moph.go.th', '/api/Cases/today-cases-all');
 
-  var response = await http.get(url);
+  var response = await http.get(Url);
   print('----------DATA -------');
-  print(response);
+  print(response.body);
 }
 
 class App extends StatelessWidget {
