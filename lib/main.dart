@@ -11,6 +11,15 @@ class MainPage extends StatefulWidget {
 }
 
 class MainPageState extends State<MainPage> {
+  var confirmed = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    confirmed.text = '-3-';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,11 +37,24 @@ class MainPageState extends State<MainPage> {
                 )
           ],
         ),
-        body: Container(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: <Widget>[Text("Hello word")],
-          ),
+        body: ListView(
+          children: [
+            SizedBox(
+              height: 30,
+            ),
+            Center(
+              child: Text(
+                'ติดเชื้ออสะสม',
+                style: TextStyle(fontSize: 30),
+              ),
+            ),
+            Center(
+              child: Text(
+                confirmed.text,
+                style: TextStyle(fontSize: 30),
+              ),
+            )
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           child: Text('Help'),
@@ -41,16 +63,23 @@ class MainPageState extends State<MainPage> {
           },
         ));
   }
-}
 
 //https://covid19.ddc.moph.go.th/api/Cases/today-cases-all
 
-Future _GetCovidData() async {
-  var Url = Uri.https('covid19.ddc.moph.go.th', '/api/Cases/today-cases-all');
+  Future _GetCovidData() async {
+    var Url = Uri.https('covid19.ddc.moph.go.th', '/api/Cases/today-cases-all');
 
-  var response = await http.get(Url);
-  print('----------DATA -------');
-  print(response.body);
+    var response = await http.get(Url);
+    print('----------DATA -------');
+    print(response.body);
+
+    var result = json.decode(response.body);
+    var v1 = result["new_case"];
+
+    setState(() {
+      confirmed.text = v1;
+    });
+  }
 }
 
 class App extends StatelessWidget {
