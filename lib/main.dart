@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+//import 'package:covid/data_api.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -11,13 +12,15 @@ class MainPage extends StatefulWidget {
 }
 
 class MainPageState extends State<MainPage> {
+  //DataApi _dataFromWebAPI;
+
   var confirmed = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    confirmed.text = '-3-';
+    confirmed.text = '---';
   }
 
   @override
@@ -70,15 +73,28 @@ class MainPageState extends State<MainPage> {
     var Url = Uri.https('covid19.ddc.moph.go.th', '/api/Cases/today-cases-all');
 
     var response = await http.get(Url);
-    print('----------DATA -------');
-    print(response.body);
+    if (response.statusCode == 200) {
+      print('----------DATA -------');
+      print(response.body);
+    } else {
+      print("Faild");
+    }
 
-    var result = json.decode(response.body);
-    var v1 = result["new_case"];
+    print('----------result json-------');
+    print(json.decode(response.body));
+    var mapObject = jsonDecode(response.body);
+    print('----------mapObject -------');
+    print(mapObject[0]);
+    
 
-    setState(() {
-      confirmed.text = v1;
-    });
+
+    //_dataFromWebAPI = dataApiFromJson(response.body);
+
+    //  var v1 = result["new_case"];
+
+    //  setState(() {
+    //    confirmed.text = v1;
+    //  });
   }
 }
 
